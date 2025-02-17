@@ -6,12 +6,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const sections = [
-  { id: "topicSentence", label: "Topic Sentence" },
-  { id: "briefSummary", label: "Brief Summary" },
-  { id: "analysisReaction", label: "Analysis or Reaction" },
-  { id: "supportingEvidence", label: "Supporting Evidence" },
-  { id: "intertextualText", label: "Intertextual Text" },
-  { id: "concludingSentence", label: "Concluding Sentence" },
+  { id: "topic-Sentence", label: "Topic Sentence" },
+  { id: "brief-Summary", label: "Brief Summary" },
+  { id: "analysis-or-Reaction", label: "Analysis or Reaction" },
+  { id: "supporting-Evidence", label: "Supporting Evidence" },
+  { id: "intertextual-Text", label: "Intertextual Text" },
+  { id: "concluding-Sentence", label: "Concluding Sentence" },
 ]
 
 export default function ResponseParagraphAssistant() {
