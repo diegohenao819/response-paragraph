@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       messages: [
         {
           role: "system",
-          content: `You are a helpful writing assistant. Provide detailed feedback on the provided section of a response paragraph in two parts:
+          content: `You are a helpful writing assistant for English language learners with a B1 english level. Provide detailed feedback on the provided section of a response paragraph in two parts:
 
 1. Content & Structure Feedback: Evaluate how well the section fits into the overall paragraph. Consider whether it effectively introduces or summarizes the idea, maintains coherence with the rest of the text, and contributes meaningfully to the argument.
 
