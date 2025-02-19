@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import Expressions from '../../pictures/expressions.png' // Verifica que la imagen esté en esta ruta
+import Expressions from '../../public/pictures/expressions.png' // Verifica que la imagen esté en esta ruta
 
 const Page = () => {
   return (
