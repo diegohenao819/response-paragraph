@@ -1,6 +1,5 @@
 // src/components/Footer.tsx
 
-
 export default function Footer() {
   return (
     <footer className="bg-gray-100 text-gray-700 py-4 mt-8 border-t">
@@ -10,12 +9,11 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Diego Henao. All rights reserved.
           </p>
           <p className="text-sm">
-            Professor, Upper-Intermediate English Course at Universidad Tecnológica de Pereira.
+            Professor of Upper-Intermediate English Course at Universidad
+            Tecnológica de Pereira.
           </p>
         </div>
-        <div className="flex gap-4 mt-2 md:mt-0">
-          
-        </div>
+        <div className="flex gap-4 mt-2 md:mt-0"></div>
       </div>
     </footer>
   );

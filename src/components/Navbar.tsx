@@ -13,6 +13,12 @@ export default function Navbar() {
           <Link href="/examples">
             <span className="text-blue-600 hover:underline cursor-pointer">Examples</span>
           </Link>
+          <Link href="/expressions">
+            <span className="text-blue-600 hover:underline cursor-pointer">Expressions</span>
+          </Link>
+          <Link href="/rubrics">
+            <span className="text-blue-600 hover:underline cursor-pointer">Rubrics</span>
+          </Link>
         </div>
       </div>
     </nav>
