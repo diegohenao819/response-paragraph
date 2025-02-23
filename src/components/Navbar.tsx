@@ -16,9 +16,9 @@ export default function Navbar() {
           <Link href="/expressions">
             <span className="text-blue-600 hover:underline cursor-pointer">Expressions</span>
           </Link>
-          {/* <Link href="/rubrics">
+          <Link href="/rubrics">
             <span className="text-blue-600 hover:underline cursor-pointer">Rubrics</span>
-          </Link> */}
+          </Link>
         </div>
       </div>
     </nav>
