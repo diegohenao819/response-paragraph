@@ -1,6 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -47,17 +47,53 @@ const sections = [
   },
 ];
 
-export default function ResponseParagraphAssistant() {
-  const [inputs, setInputs] = useState<Record<string, string>>({});
-  const [feedback, setFeedback] = useState<Record<string, string>>({});
-  const [completeText, setCompleteText] = useState("");
-  const [generalFeedback, setGeneralFeedback] = useState("");
-  const [loading, setLoading] = useState<Record<string, boolean>>({});
+// Hook personalizado actualizado para admitir actualizaciones funcionales
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
 
-  const handleInputChange = (id: string, value: string) => {
-    setInputs((prev) => ({ ...prev, [id]: value }));
-    updateCompleteText({ ...inputs, [id]: value });
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const item = localStorage.getItem(key);
+      if (item) {
+        try {
+          setStoredValue(JSON.parse(item));
+        } catch {
+          setStoredValue(item as unknown as T);
+        }
+      }
+    }
+  }, [key]);
+
+  const setValue = (value: T | ((prevValue: T) => T)) => {
+    setStoredValue((prevValue) => {
+      const newValue =
+        typeof value === "function" ? (value as (prevValue: T) => T)(prevValue) : value;
+      if (typeof window !== "undefined") {
+        localStorage.setItem(key, JSON.stringify(newValue));
+      }
+      return newValue;
+    });
   };
+
+  return [storedValue, setValue] as const;
+}
+
+export default function ResponseParagraphAssistant() {
+  const [inputs, setInputs] = useLocalStorage<Record<string, string>>(
+    "responseParagraphInputs",
+    {}
+  );
+  const [feedback, setFeedback] = useLocalStorage<Record<string, string>>(
+    "responseParagraphFeedback",
+    {}
+  );
+  const [completeText, setCompleteText] = useState("");
+  const [generalFeedback, setGeneralFeedback] = useLocalStorage<string>(
+    "generalFeedback",
+    ""
+  );
+  const [loading, setLoading] = useState<Record<string, boolean>>({});
+  const [generalLoading, setGeneralLoading] = useState(false);
 
   const updateCompleteText = (currentInputs: Record<string, string>) => {
     const text = sections
@@ -67,9 +103,14 @@ export default function ResponseParagraphAssistant() {
     setCompleteText(text);
   };
 
+  const handleInputChange = (id: string, value: string) => {
+    const updatedInputs = { ...inputs, [id]: value };
+    setInputs(updatedInputs);
+    updateCompleteText(updatedInputs);
+  };
+
   const sendToAI = async (id: string) => {
     setLoading((prev) => ({ ...prev, [id]: true }));
-
     try {
       const response = await fetch("/api/feedback", {
         method: "POST",
@@ -77,6 +118,7 @@ export default function ResponseParagraphAssistant() {
         body: JSON.stringify({ section: id, text: inputs[id] }),
       });
       const data = await response.json();
+      // Actualización funcional para conservar el feedback previo
       setFeedback((prev) => ({ ...prev, [id]: data.feedback }));
     } catch (error) {
       console.error("Error fetching AI feedback:", error);
@@ -86,6 +128,7 @@ export default function ResponseParagraphAssistant() {
   };
 
   const getGeneralFeedback = async () => {
+    setGeneralLoading(true);
     try {
       const response = await fetch("/api/general-feedback", {
         method: "POST",
@@ -96,32 +139,34 @@ export default function ResponseParagraphAssistant() {
       setGeneralFeedback(data.feedback);
     } catch (error) {
       console.error("Error fetching general AI feedback:", error);
+    } finally {
+      setGeneralLoading(false);
     }
   };
 
   return (
     <div className="space-y-8">
-      {/* Responsive grid for individual sections */}
+      {/* Grid para secciones individuales */}
       <div className="grid grid-cols-1 md:grid-cols-[2fr,auto,2fr] gap-4">
         {sections.map((section) => (
           <div key={section.id} className="contents">
             <div className="space-y-2">
-            <Tooltip>
-  <TooltipTrigger asChild>
-    <div className="flex items-center gap-1 cursor-pointer">
-      <label
-        htmlFor={section.id}
-        className="block text-sm font-medium text-gray-700"
-      >
-        {section.label}
-      </label>
-      <Info className="h-4 w-4 text-gray-500" />
-    </div>
-  </TooltipTrigger>
-  <TooltipContent side="top" className="bg-gray-50 p-2 rounded shadow">
-    <p className="text-xs text-gray-600">{section.example}</p>
-  </TooltipContent>
-</Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1 cursor-pointer">
+                    <label
+                      htmlFor={section.id}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      {section.label}
+                    </label>
+                    <Info className="h-4 w-4 text-gray-500" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="bg-gray-50 p-2 rounded shadow">
+                  <p className="text-xs text-gray-600">{section.example}</p>
+                </TooltipContent>
+              </Tooltip>
               <Textarea
                 id={section.id}
                 value={inputs[section.id] || ""}
@@ -146,19 +191,25 @@ export default function ResponseParagraphAssistant() {
             </div>
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">AI Feedback</CardTitle>
+                <CardTitle>AI Feedback</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm whitespace-pre-wrap">
-                  {feedback[section.id] || "No feedback yet."}
-                </p>
+                {feedback[section.id] ? (
+                  <div className="prose text-sm whitespace-pre-wrap max-h-32 overflow-auto">
+                    <ReactMarkdown>{feedback[section.id]}</ReactMarkdown>
+                  </div>
+                ) : (
+                  <div className="text-sm text-muted-foreground italic">
+                    No feedback yet.
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
         ))}
       </div>
 
-      {/* Responsive grid for complete text & general feedback */}
+      {/* Grid para el texto completo y el feedback general */}
       <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-4">
         <Card>
           <CardHeader>
@@ -173,12 +224,20 @@ export default function ResponseParagraphAssistant() {
             <CardTitle>General AI Feedback</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button onClick={getGeneralFeedback} className="w-full mb-4">
-              Get General AI Feedback
+            <Button
+              onClick={getGeneralFeedback}
+              className="w-full mb-4"
+              disabled={generalLoading}
+            >
+              {generalLoading ? (
+                <Loader2 className="animate-spin h-5 w-5" />
+              ) : (
+                "Get General AI Feedback"
+              )}
             </Button>
             {generalFeedback && (
-              <div className="text-sm whitespace-pre-wrap max-h-32 overflow-auto">
-                {generalFeedback}
+              <div className="prose text-sm max-h-32 overflow-auto">
+                <ReactMarkdown>{generalFeedback}</ReactMarkdown>
               </div>
             )}
           </CardContent>
