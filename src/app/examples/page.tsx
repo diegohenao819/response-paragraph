@@ -75,6 +75,42 @@ export default function ExamplesPage() {
     ],
   };
 
+  const example3 = {
+    title: "EXAMPLE 3: To Kill a Mockingbird - Courtroom Scene",
+    sections: [
+      {
+        number: 1,
+        title: "Topic Sentence",
+        text: "In Harper Lee's To Kill a Mockingbird, the courtroom scene powerfully exposes the deep-seated racial injustice in the American South.",
+      },
+      {
+        number: 2,
+        title: "Brief Summary",
+        text: "In this scene, the trial of Tom Robinson unfolds as the courtroom becomes a microcosm of the broader societal prejudices that pervade the community.",
+      },
+      {
+        number: 3,
+        title: "Analysis or Reaction",
+        text: "I was struck by how the narrative not only depicted a legal battle but also mirrored the moral conflicts of the era, inviting readers to question the fairness of the justice system.",
+      },
+      {
+        number: 4,
+        title: "Supporting Evidence",
+        text: "For instance, Atticus Finch’s calm yet impassioned defense, where he emphasizes the importance of truth over tradition, highlights the stark contrast between idealism and societal bias.",
+      },
+      {
+        number: 5,
+        title: "Personal Connection or Intertextual Text",
+        text: "Reflecting on modern issues of racial inequality, I find that this scene resonates with current events, much like how contemporary writers draw parallels between historical injustices and today’s challenges.",
+      },
+      {
+        number: 6,
+        title: "Concluding Sentence",
+        text: "Ultimately, the courtroom scene not only advances the novel’s central themes but also serves as a timeless call to recognize and confront the injustices that continue to shape our world.",
+      },
+    ],
+  };
+
   const renderExampleSections = (
     sections: { number: number; title: string; text: string }[]
   ) => (
@@ -111,6 +147,15 @@ export default function ExamplesPage() {
         </CardHeader>
         <CardContent className="p-4">
           {renderExampleSections(example2.sections)}
+        </CardContent>
+      </Card>
+
+      <Card className="shadow-lg">
+        <CardHeader className="bg-purple-100 p-4">
+          <CardTitle className="text-xl">{example3.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="p-4">
+          {renderExampleSections(example3.sections)}
         </CardContent>
       </Card>
 
