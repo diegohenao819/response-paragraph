@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4.1",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
@@ -67,7 +67,7 @@ Below is an example of a well-structured response paragraph for your reference:
 "The movie serves as a reminder that acts of kindness and advocacy can leave a lasting impact, even if they come at great personal cost."
 ---
 
-Please provide comprehensive, actionable feedback on the complete response paragraph based on the criteria outlined above.
+Please provide comprehensive, actionable feedback on the complete response paragraph based on the criteria outlined above..
           `.trim(),
         },
         {
