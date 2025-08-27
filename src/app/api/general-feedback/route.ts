@@ -1,9 +1,17 @@
+// ⬇️ al inicio del archivo
+export const runtime = 'nodejs'       // usa runtime Node (más flexible para llamadas largas)
+export const maxDuration = 60         // extiende el límite (prueba 60s en Hobby)
+export const dynamic = 'force-dynamic'// evita caché agresiva
+
+
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+
 
 export async function POST(req: Request) {
   const { text } = await req.json();
