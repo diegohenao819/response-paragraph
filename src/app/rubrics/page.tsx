@@ -1,18 +1,16 @@
 import Image from "next/image";
-import Rubrics from "../../public/pictures/rubrics.png"; // Verifica que la imagen esté en esta ruta
 
-const Page = () => {
+export default function Page() {
   return (
-    <div>
-      <h2>Rubrics - 2024</h2>
+    <div className="space-y-3">
+      <h2 className="text-xl font-semibold">Rubrics - 2024</h2>
       <Image
-        src={Rubrics}
+        src="/pictures/rubrics.png"
         alt="Rubrics illustration"
         width={700}
         height={500}
+        priority
       />
     </div>
   );
-};
-
-export default Page;
+}

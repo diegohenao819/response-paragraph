@@ -1,18 +1,16 @@
-import React from 'react'
-import Image from 'next/image'
-import Expressions from '../../public/pictures/expressions.png' // Verifica que la imagen esté en esta ruta
+import Image from "next/image";
 
-const Page = () => {
+export default function Page() {
   return (
-    <div>
-      <Image 
-        src={Expressions} 
-        alt="Expressions illustration" 
-        width={700} // Ajusta el tamaño según necesites
-        height={500} 
+    <div className="space-y-3">
+      <h2 className="text-xl font-semibold">Expressions</h2>
+      <Image
+        src="/pictures/expressions.png"
+        alt="Expressions illustration"
+        width={700}
+        height={500}
+        priority
       />
     </div>
-  )
+  );
 }
-
-export default Page
