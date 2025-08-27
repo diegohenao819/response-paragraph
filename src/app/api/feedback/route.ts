@@ -1,14 +1,10 @@
 // ⬇️ al inicio del archivo
-export const runtime = 'nodejs'       // usa runtime Node (más flexible para llamadas largas)
-export const maxDuration = 60         // extiende el límite (prueba 60s en Hobby)
-export const dynamic = 'force-dynamic'// evita caché agresiva
-
-
+export const runtime = "nodejs"; // usa runtime Node (más flexible para llamadas largas)
+export const maxDuration = 60; // extiende el límite (prueba 60s en Hobby)
+export const dynamic = "force-dynamic"; // evita caché agresiva
 
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-
-
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -22,8 +18,8 @@ export async function POST(req: Request) {
       model: "gpt-5-mini",
       messages: [
         {
-  role: "system",
-  content: `
+          role: "system",
+          content: `
 You are a strict but supportive writing coach for English learners. You evaluate ONE section of a response paragraph at a time.
 
 OUTPUT FORMAT (markdown, exactly this structure):
@@ -41,6 +37,7 @@ Score: X/5
 RULES
 - No preamble, no quotes of the student's text, no extra sections.
 - Use simple language to give feedback.
+- If grammar is perfect, write "No grammar issues found."
 - Tailor advice to the provided Section:
   - Topic Sentence: states main claim, specific, arguable, matches paragraph scope.
   - Brief Summary: objective, key idea only, no opinions or evaluation.
@@ -50,7 +47,7 @@ RULES
   - Concluding Sentence: synthesizes main idea, echoes topic, no new claims.
 - If input is missing or <8 words: write "Please paste a fuller section (≥1–2 sentences)." then "Score: 0/5".
 `.trim(),
-},
+        },
         {
           role: "user",
           content: `Section: ${section}\nText: ${text}\n\nPlease provide detailed feedback as per the instructions above.`,
