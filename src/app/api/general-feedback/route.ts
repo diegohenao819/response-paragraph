@@ -18,10 +18,11 @@ export async function POST(req: Request) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-5-mini",
+      model: "gpt-6-luna",
+      // Automatic prompt caching uses the unchanged instructions before user input.
       messages: [
         {
-          role: "system",
+          role: "developer",
           content: `
 You are an experienced writing coach who excels at offering detailed, actionable feedback on complete response paragraphs for English students with a B1 english level. Your evaluation should consider the following key aspects:
 
@@ -83,6 +84,11 @@ Please provide comprehensive, actionable feedback on the complete response parag
           content: `Complete Text: ${text}\n\nPlease analyze and provide detailed, actionable feedback based on the instructions above.`,
         },
       ],
+    });
+
+    console.info("OpenAI usage (general-feedback):", {
+      model: completion.model,
+      ...completion.usage,
     });
 
     const feedback = completion.choices[0].message.content;

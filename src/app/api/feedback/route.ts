@@ -15,10 +15,11 @@ export async function POST(req: Request) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-5-mini",
+      model: "gpt-6-luna",
+      // Automatic prompt caching uses the unchanged instructions before user input.
       messages: [
         {
-          role: "system",
+          role: "developer",
           content: `
 You are a strict but supportive writing coach for English learners. You evaluate ONE section of a response paragraph at a time.
 
@@ -53,6 +54,11 @@ RULES
           content: `Section: ${section}\nText: ${text}\n\nPlease provide detailed feedback as per the instructions above.`,
         },
       ],
+    });
+
+    console.info("OpenAI usage (feedback):", {
+      model: completion.model,
+      ...completion.usage,
     });
 
     const feedback = completion.choices[0].message.content;
