@@ -1,0 +1,127 @@
+{
+  "title": "Choose the visual world",
+  "question": "The roll assigned the Graph-Paper Notebook. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Graph-Paper Notebook",
+      "kicker": "THE ROLL",
+      "lineage": "Colombian cuaderno cuadriculado, corrected in class",
+      "thesis": "Your draft lives on a squared notebook page; feedback arrives the way a teacher marks it: highlighter, margin notes, a circled score.",
+      "palette": ["#FBFCFE", "#1C2533", "#1F4E79", "#2E7D32", "#B45309", "#6B2FA0", "#C0392B"],
+      "materials": ["5 mm squared paper with a red margin rule", "ballpoint-blue ink", "four highlighter colours, one per part", "red-pen circles and ticks"],
+      "viewport": "One notebook sheet fills the screen: the paragraph is written on the grid, each part swiped in its highlighter colour; the wide left margin carries the part labels and word budget; the score is circled in red pen at the top right.",
+      "risk": "Can tip into skeuomorphic costume if paper texture, fake handwriting or page curls creep in; the grid and pen marks must stay functional.",
+      "raised": [
+        {"from": "challenger-margin", "raise": "Feedback is set in the margin and bracketed back to the exact part it is about, never in a detached card."},
+        {"from": "challenger-jcard", "raise": "The 190–210 word budget is a ruled track filled part by part (25 / 50 / 100 / 25), so overflow is visible like a tape that will not fit."},
+        {"from": "challenger-datamatics", "raise": "Every number (words, sentences, scores) is set in tabular figures in fixed columns, so counts never jitter while typing."},
+        {"from": "challenger-transit", "raise": "The part you are working on burns at full colour; the other three drop to a quiet tint."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "The Class Deck",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "the Week 4 slides students already saw",
+      "thesis": "The app speaks the exact language of the slides: numbered 01–04 part chips, navy ink, ✓/✗ verdict tags.",
+      "palette": ["#FFFFFF", "#1C2533", "#1F4E79", "#2E7D32", "#B45309", "#6B2FA0"],
+      "materials": ["flat slide panels", "numbered part chips", "verdict tags"],
+      "viewport": "A clean two-pane editor: parts on the left as numbered slide-style blocks, verdicts and feedback on the right.",
+      "risk": "Familiar and safe: closest to what most AI writing tools look like, with the slide colours as the only signature."
+    },
+    {
+      "id": "challenger-margin",
+      "label": "Annotated Edition",
+      "verdict": "competitive",
+      "lineage": "wide-margin reference editions with a centre rail",
+      "thesis": "The paragraph set as a small text block inside a wide annotation margin where every comment is ruled back to its line.",
+      "palette": ["#F4F1EA", "#1A1A1A", "#C2410C"],
+      "materials": ["hairline rules", "vermilion keys", "small-caps apparatus"],
+      "viewport": "Centred text block, feedback notes hung in the margins with hairline brackets to their sentences.",
+      "case": "Excellent for product clarity (feedback tied to text) but reads as a scholarly book, not a student's own work.",
+      "risk": "Feels academic-precious; weak on phones where margins vanish.",
+      "hero": "https://impeccable.style/worlds/cards/rw-centre-rail-reference-setting-hero.webp"
+    },
+    {
+      "id": "challenger-jcard",
+      "label": "Mixtape J-Card",
+      "verdict": "competitive",
+      "lineage": "hand-lettered cassette inlays timed to fill a side",
+      "thesis": "Four parts as a tracklist that must fit exactly 190–210 words, like a side of tape.",
+      "palette": ["#FFFFFF", "#1E3A8A", "#9CA3AF", "#DC2626"],
+      "materials": ["ruled inlay stock", "ballpoint caps", "running totals"],
+      "viewport": "A folded card: parts listed as tracks with word counts right-aligned and the total budget on the spine.",
+      "case": "The word-budget metaphor is perfect; students in 2026 do not identify with cassettes.",
+      "risk": "Nostalgia costume for an audience that never owned tapes.",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-cassette-j-card-hero.webp"
+    },
+    {
+      "id": "challenger-transit",
+      "label": "Transit Diagram",
+      "verdict": "declined",
+      "lineage": "metro line maps",
+      "thesis": "Four coloured lines, one per part, meeting at interchanges.",
+      "palette": ["#14213D", "#C0392B", "#1F4E79", "#E0A100", "#2E7D32"],
+      "materials": ["enamel", "45° lines"],
+      "viewport": "Parts as stations along a line.",
+      "case": "A paragraph is linear text, not a network; the map adds a layer to decode.",
+      "risk": "Decorative indirection.",
+      "kept": "The active part burns brightest; the rest recede.",
+      "hero": "https://impeccable.style/worlds/cards/wayfinding-cartography-signage-midnight-transit-diagram-hero.webp"
+    },
+    {
+      "id": "challenger-datamatics",
+      "label": "Datamatics Field",
+      "verdict": "declined",
+      "lineage": "black-and-white data art",
+      "thesis": "Text as data columns and barcodes.",
+      "palette": ["#000000", "#FFFFFF"],
+      "materials": ["hairline bars", "monospace numerics"],
+      "viewport": "Barcode field with counts.",
+      "case": "Hostile to a nervous B2 writer; no colour for the four parts.",
+      "risk": "Cold and unreadable for writing.",
+      "kept": "Tabular, fixed-column numerics.",
+      "hero": "https://impeccable.style/worlds/cards/ikeda-datamatics-hero.webp"
+    },
+    {
+      "id": "challenger-feed",
+      "label": "Vertical Feed",
+      "verdict": "declined",
+      "lineage": "full-screen short-video feeds",
+      "thesis": "One part per full screen, snap to the next.",
+      "palette": ["#000000", "#FFFFFF"],
+      "materials": ["full-bleed frames", "right-rail glyphs"],
+      "viewport": "One part fills the phone; swipe up for the next.",
+      "case": "Students know it by heart, but it hides the whole paragraph, which the rubric judges as one unit.",
+      "risk": "Fragments the paragraph.",
+      "kept": "One part owns the focus at a time.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-vertical-video-feed-surface-hero.webp"
+    },
+    {
+      "id": "challenger-timetable",
+      "label": "Timetable Slide Rack",
+      "verdict": "declined",
+      "lineage": "1970s pocket airline timetables",
+      "thesis": "Single type size, rank by weight and rule.",
+      "palette": ["#E8B923", "#2B2B2B", "#F2EBDD", "#C0392B", "#1F6E43"],
+      "materials": ["tinted glass", "raked slides"],
+      "viewport": "Raked rack of slides.",
+      "case": "No connection to students' world; the rake fights text editing.",
+      "risk": "Unusable for writing.",
+      "kept": "State as a mark in a fixed cell: filled done, hollow pending."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A clean SaaS writing assistant (Grammarly / Notion-style), executed impeccably.",
+    "palette": ["#FFFFFF", "#111827", "#4F46E5"],
+    "materials": ["soft cards", "sidebar", "subtle shadows"],
+    "viewport": "Editor in the centre, AI feedback in a right sidebar.",
+    "risk": "Indistinguishable from every other AI writing tool."
+  },
+  "steer": true
+}

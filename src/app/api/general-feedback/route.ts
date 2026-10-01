@@ -6,84 +6,147 @@ export const dynamic = 'force-dynamic'// evita caché agresiva
 
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import {
+  CHECKLIST,
+  RUBRIC,
+  RUBRIC_TOTAL,
+  SECTIONS,
+  WORD_LIMIT,
+  countWords,
+  wordLimitScore,
+  type SectionId,
+} from "@/lib/responseParagraph";
+import { SCORE_ROWS, totalOf, type Marking } from "@/lib/marking";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const MODEL_PARAGRAPH = SECTIONS.map((s) => s.example).join(" ");
 
+const DEVELOPER_PROMPT = `
+You are an experienced writing coach marking a COMPLETE response paragraph written by an Upper-Intermediate (B2) English student at a Colombian university. A response paragraph has two steps: LISTEN (show you understood the speaker's argument) and ANSWER (evaluate it with reasons and examples). It is about how well the student thinks about the text, not whether they liked it.
+
+REQUIRED FORMAT
+- ONE paragraph, no line breaks, ${WORD_LIMIT.min}–${WORD_LIMIT.max} words, four parts in this order:
+${SECTIONS.map((s) => `### ${s.number} ${s.label} (${s.sentences.min === s.sentences.max ? s.sentences.min : `${s.sentences.min}–${s.sentences.max}`} sentence(s), ${s.points} points)${s.criteria}`).join("\n\n")}
+
+RUBRIC (${RUBRIC_TOTAL} points)
+${RUBRIC.map((r) => `- ${r.label}: ${r.points}`).join("\n")}
+- Language use: list every language error you count (grammar, spelling, punctuation, contractions, comma splices before however/therefore). The app scores it as 5 minus the number of errors.
+- Word limit: measured by the app; do not score it, only comment on it using the measured count.
+
+STUDENT CHECKLIST
+${CHECKLIST.map((c) => `- ${c}`).join("\n")}
+
+MODEL PARAGRAPH (case: a school bans mobile phones; 1 + 3 + 5 + 1 sentences, 203 words):
+"${MODEL_PARAGRAPH}"
+
+WHAT TO RETURN (JSON, all text in English, simple and clear, strict but encouraging)
+- parts: split the student's paragraph into the four parts. If the student already labeled the parts, return exactly those parts and evaluate each one as the part the student says it is (e.g. a missing proposal is a weakness of the reaction, not a reason to move the conclusion). Copy each part EXACTLY as written (character for character, consecutive sentences). Use "" for a part that is missing.
+- scores: an integer score and a comment (max 15 words) for topic (0–2), summary (0–4), reaction (0–5) and conclusion (0–2). For language and wordLimit, the score is ignored (use 0) but write the comment.
+- partNotes: one margin note per part (max 35 words): what works and the single most useful change. If the part is missing, say what it needs.
+- moves: which reaction moves are present.
+- languageErrors: each error once, quoting only the wrong words (max 8 words), the correction and a 3–8 word reason. Empty list if none. Corrections must follow academic register: never use contractions in a correction (doesn't → does not, never → don't).
+- priorities: exactly 3 short, concrete actions for the next draft, most important first.
+- Never rewrite the whole paragraph or a whole part for the student.
+`.trim();
+
+const scoreSchema = {
+  type: "object",
+  additionalProperties: false,
+  required: ["score", "comment"],
+  properties: { score: { type: "integer" }, comment: { type: "string" } },
+};
+
+const partsSchema = (description: string) => ({
+  type: "object",
+  additionalProperties: false,
+  description,
+  required: SECTIONS.map((s) => s.id),
+  properties: Object.fromEntries(SECTIONS.map((s) => [s.id, { type: "string" }])),
+});
+
+const MARKING_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["parts", "scores", "partNotes", "moves", "languageErrors", "priorities"],
+  properties: {
+    parts: partsSchema("Exact text of each part"),
+    scores: {
+      type: "object",
+      additionalProperties: false,
+      required: SCORE_ROWS.map((r) => r.key),
+      properties: Object.fromEntries(SCORE_ROWS.map((r) => [r.key, scoreSchema])),
+    },
+    partNotes: partsSchema("One margin note per part"),
+    moves: {
+      type: "object",
+      additionalProperties: false,
+      required: ["recognize", "refute", "consequences", "propose"],
+      properties: {
+        recognize: { type: "boolean" },
+        refute: { type: "boolean" },
+        consequences: { type: "boolean" },
+        propose: { type: "boolean" },
+      },
+    },
+    languageErrors: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["wrong", "correct", "reason"],
+        properties: {
+          wrong: { type: "string" },
+          correct: { type: "string" },
+          reason: { type: "string" },
+        },
+      },
+    },
+    priorities: { type: "array", items: { type: "string" } },
+  },
+};
+
+const clamp = (n: number, max: number) => Math.max(0, Math.min(max, Math.round(n)));
 
 export async function POST(req: Request) {
-  const { text } = await req.json();
+  const { text, caseText, parts } = (await req.json()) as {
+    text: string;
+    caseText?: string;
+    parts?: Partial<Record<SectionId, string>>;
+  };
+
+  const words = countWords(text ?? "");
+  if (words < 40) {
+    return NextResponse.json(
+      { error: "Write at least 40 words before asking for marking." },
+      { status: 400 }
+    );
+  }
 
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-6-luna",
       // Automatic prompt caching uses the unchanged instructions before user input.
       messages: [
-        {
-          role: "developer",
-          content: `
-You are an experienced writing coach who excels at offering detailed, actionable feedback on complete response paragraphs for English students with a B1 english level. Your evaluation should consider the following key aspects:
-
-1. **Overall Structure & Organization:**  
-   - Assess if the response paragraph follows a clear, logical order, including a topic sentence, brief summary, analysis/reaction, supporting evidence, personal connection or intertextual reference, and a concluding sentence.
-   - Identify any gaps or misplacements in the structure.
-
-2. **Coherence & Logical Flow:**  
-   - Evaluate how well the ideas are connected and if the argument progresses naturally.
-   - Point out any disjointed transitions or unclear reasoning.
-
-3. **Clarity & Expression:**  
-   - Check if the language is clear, concise, and accessible.
-   - Highlight any overly complex phrases or ambiguities and suggest improvements.
-
-4. **Relevance & Persuasiveness:**  
-   - Consider how effectively the paragraph communicates its main idea and supports it with evidence.
-   - Analyze whether the examples and supporting details are compelling and relevant.
-
-5. **Tone & Engagement:**  
-   - Comment on the overall tone of the paragraph and its suitability for the subject matter.
-   - Suggest ways to make the writing more engaging or impactful if needed.
-
-6. **Grammar & Mechanics:**  
-   - Identify any grammatical errors, punctuation issues, or awkward phrasing.
-   - Provide specific corrections and suggestions to improve the overall grammatical quality of the paragraph.
-
-At the end of your response, please include a summary line with a final score in the format "Final Score: X/5" (with X being a number from 0 to 5, where 0 indicates a completely ineffective response and 5 indicates an excellent one).
-
-Below is an example of a well-structured response paragraph for your reference:
-
----
-**EXAMPLE 1: El Olvido que Serémos**
-
-1. **Topic Sentence:**  
-"In the movie *El Olvido que Seremos*, directed by Fernando Trueba, the story follows the life of Héctor Abad Gómez, a Colombian doctor and human rights activist who fought for social justice and public health."
-
-2. **Brief Summary:**  
-"The film portrays his dedication to helping the underprivileged in Medellín and the profound impact of his work on his family, especially his son."
-
-3. **Analysis or Reaction:**  
-"This story is powerful because it shows the courage and resilience needed to stand up for what is right, even in the face of danger. It highlights the importance of empathy and fighting for the common good, which can be both inspiring and tragic."
-
-4. **Supporting Evidence:**  
-"For instance, the scene where Héctor passionately speaks at a public gathering about the right to health care demonstrates his firm commitment to his beliefs."
-
-5. **Personal Connection or Intertextual Text:**  
-"This is very important in current society because the film sheds light on the ongoing social issues in Colombia, such as political violence and the struggle for human rights, a factor that can create change and inspire future generations to keep pushing for justice."
-
-6. **Concluding Sentence:**  
-"The movie serves as a reminder that acts of kindness and advocacy can leave a lasting impact, even if they come at great personal cost."
----
-
-Please provide comprehensive, actionable feedback on the complete response paragraph based on the criteria outlined above..
-          `.trim(),
-        },
+        { role: "developer", content: DEVELOPER_PROMPT },
         {
           role: "user",
-          content: `Complete Text: ${text}\n\nPlease analyze and provide detailed, actionable feedback based on the instructions above.`,
+          content: [
+            `Measured word count: ${words} (required ${WORD_LIMIT.min}–${WORD_LIMIT.max})`,
+            `Case / source text: ${caseText?.trim() || "(not provided)"}`,
+            parts
+              ? `The student labeled the parts (use exactly this split):\n${SECTIONS.map((s) => `${s.label}: ${parts[s.id]?.trim() || "(empty)"}`).join("\n")}`
+              : "The student pasted the whole paragraph: find the four parts yourself.",
+            `COMPLETE PARAGRAPH:\n${text.trim()}`,
+          ].join("\n\n"),
         },
       ],
+      response_format: {
+        type: "json_schema",
+        json_schema: { name: "marking", strict: true, schema: MARKING_SCHEMA },
+      },
     });
 
     console.info("OpenAI usage (general-feedback):", {
@@ -91,8 +154,30 @@ Please provide comprehensive, actionable feedback on the complete response parag
       ...completion.usage,
     });
 
-    const feedback = completion.choices[0].message.content;
-    return NextResponse.json({ feedback });
+    const raw = JSON.parse(completion.choices[0].message.content ?? "{}") as Omit<
+      Marking,
+      "total" | "words"
+    >;
+
+    // Los puntajes medibles los decide la app, no el modelo.
+    const scores = { ...raw.scores };
+    for (const row of SCORE_ROWS) {
+      scores[row.key] = { ...scores[row.key], score: clamp(scores[row.key]?.score ?? 0, row.max) };
+    }
+    scores.language.score = Math.max(0, 5 - raw.languageErrors.length);
+    scores.wordLimit.score = wordLimitScore(words);
+
+    const marking: Marking = {
+      ...raw,
+      parts: (parts
+        ? Object.fromEntries(SECTIONS.map((s) => [s.id, parts[s.id]?.trim() ?? ""]))
+        : raw.parts) as Record<SectionId, string>,
+      scores,
+      priorities: raw.priorities.slice(0, 3),
+      total: totalOf(scores),
+      words,
+    };
+    return NextResponse.json({ marking });
   } catch (error) {
     console.error("OpenAI API error:", error);
     return NextResponse.json(

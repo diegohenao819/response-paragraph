@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-01T00:00:00Z",
+  "title": "Design System: Response Paragraph Writing Assistant",
+  "extensions": {
+    "colorMeta": {
+      "desk": { "role": "neutral", "displayName": "Desk", "canonical": "#e6ebf1", "tonalRamp": ["#44474b", "#7a7e83", "#bbbfc5", "#e6ebf1", "#ecf0f5", "#f1f4f8", "#f5f7fa", "#f8f9fc"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#fdfdfe", "tonalRamp": ["#4a4b4f", "#868789", "#cdcecf", "#fdfdfe", "#fcfcfe", "#fbfcfd", "#fbfcfd", "#fafbfd"] },
+      "grid-line": { "role": "neutral", "displayName": "Grid Line", "canonical": "rgba(31, 78, 121, 0.085)" },
+      "margin-rule": { "role": "neutral", "displayName": "Margin Rule", "canonical": "rgba(214, 69, 65, 0.55)" },
+      "ink": { "role": "primary", "displayName": "Ballpoint Navy", "canonical": "#1c2533", "tonalRamp": ["#12151c", "#151b24", "#19212d", "#1c2533", "#5f6570", "#969ba2", "#c3c6cb", "#e4e6e9"] },
+      "ink-soft": { "role": "neutral", "displayName": "Ink Soft", "canonical": "#4a5568", "tonalRamp": ["#1d2129", "#2c333e", "#3e4757", "#4a5568", "#7f8795", "#abb0ba", "#ced2d8", "#e8eaee"] },
+      "ink-faint": { "role": "neutral", "displayName": "Ink Faint", "canonical": "#6b7686", "tonalRamp": ["#252a31", "#3d434d", "#58626f", "#6b7686", "#969eaa", "#babfc7", "#d6dadf", "#eceef1"] },
+      "pen": { "role": "secondary", "displayName": "Teacher's Red Pen", "canonical": "#c0392b", "tonalRamp": ["#3b1a1a", "#672520", "#9c3126", "#c0392b", "#d1736a", "#e0a49f", "#eccbc9", "#f4e8e8"] },
+      "pen-soft": { "role": "secondary", "displayName": "Pen Tint", "canonical": "rgba(192, 57, 43, 0.1)" },
+      "rule": { "role": "neutral", "displayName": "Hairline Rule", "canonical": "rgba(28, 37, 51, 0.14)" },
+      "hl-topic": { "role": "tertiary", "displayName": "Topic Blue Highlighter", "canonical": "rgba(110, 175, 240, 0.45)" },
+      "hl-summary": { "role": "tertiary", "displayName": "Summary Green Highlighter", "canonical": "rgba(120, 210, 110, 0.45)" },
+      "hl-reaction": { "role": "tertiary", "displayName": "Reaction Orange Highlighter", "canonical": "rgba(255, 166, 77, 0.5)" },
+      "hl-conclusion": { "role": "tertiary", "displayName": "Conclusion Lilac Highlighter", "canonical": "rgba(190, 150, 240, 0.48)" },
+      "ink-topic": { "role": "tertiary", "displayName": "Topic Ink", "canonical": "#1f4e79", "tonalRamp": ["#12202d", "#172f47", "#1c4265", "#1f4e79", "#6182a1", "#97adc2", "#c3d0dc", "#e4eaf0"] },
+      "ink-summary": { "role": "tertiary", "displayName": "Summary Ink", "canonical": "#1e6b2e", "tonalRamp": ["#12271b", "#163e21", "#1b5929", "#1e6b2e", "#60966c", "#97baa0", "#c3d7c9", "#e4ede8"] },
+      "ink-reaction": { "role": "tertiary", "displayName": "Reaction Ink", "canonical": "#8c4108", "tonalRamp": ["#2e1c11", "#4d290e", "#73370a", "#8c4108", "#ad7952", "#c9a78f", "#dfcdc0", "#efe8e5"] },
+      "ink-conclusion": { "role": "tertiary", "displayName": "Conclusion Ink", "canonical": "#6b2fa0", "tonalRamp": ["#251837", "#3d205a", "#582984", "#6b2fa0", "#966cbc", "#ba9fd3", "#d6c8e6", "#ece7f4"] },
+      "desk-night": { "role": "neutral", "displayName": "Desk at Night", "canonical": "#0b1017" },
+      "paper-night": { "role": "neutral", "displayName": "Paper under the Lamp", "canonical": "#141b26" },
+      "ink-night": { "role": "primary", "displayName": "Night Ink", "canonical": "#e6ecf3" },
+      "pen-night": { "role": "secondary", "displayName": "Coral Pen", "canonical": "#ff7a6b" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "One page title per screen; 30-36px on the writing desk, 36-48px on reference pages." },
+      "headline": { "displayName": "Headline", "purpose": "Sheet titles; 30-36px for the marked-sheet title." },
+      "title": { "displayName": "Title", "purpose": "Part names and sub-sections; 18px variant for in-sheet h3." },
+      "body-writing": { "displayName": "Body Writing", "purpose": "Student writing and read-back text, sitting on the 28px grid." },
+      "body": { "displayName": "Body", "purpose": "Model sentences, priorities, list content." },
+      "body-small": { "displayName": "Body Small", "purpose": "Hints, margin-note text, rubric comments." },
+      "label": { "displayName": "Label", "purpose": "Keys for individual items (part on a note, stance, connector family). Never an eyebrow above a heading." },
+      "figures": { "displayName": "Figures", "purpose": "Every count, score, limit and draft number; tabular." },
+      "score": { "displayName": "Score", "purpose": "The total inside the hand-drawn pen circle." }
+    },
+    "shadows": [
+      { "name": "sheet", "value": "0 1px 2px rgba(28,37,51,0.06), 0 12px 32px -12px rgba(28,37,51,0.18)", "purpose": "Every sheet lifting off the desk (light)." },
+      { "name": "sheet-night", "value": "0 1px 2px rgba(0,0,0,0.4), 0 16px 40px -16px rgba(0,0,0,0.7)", "purpose": "Every sheet lifting off the desk (dark)." },
+      { "name": "mark-button", "value": "0 4px 14px -6px rgba(28,37,51,0.45)", "purpose": "Primary Mark button at rest." },
+      { "name": "mark-button-hover", "value": "0 10px 22px -10px rgba(192,57,43,0.6)", "purpose": "Primary Mark button on hover, with a 1px lift." },
+      { "name": "bottom-bar", "value": "0 -8px 24px -12px rgba(0,0,0,0.25)", "purpose": "Fixed mobile action bar." },
+      { "name": "field-focus", "value": "0 0 0 3px var(--hl)", "purpose": "Writing-area focus halo in the part's highlighter." }
+    ],
+    "motion": [
+      { "name": "ease-ink", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entrances, highlighter swipes, word-track fill, mode-switch thumb." },
+      { "name": "ease-pen", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "Pen strokes drawing on." },
+      { "name": "hl-swipe", "value": "750ms ease-ink", "purpose": "Highlighter swipe left to right; 260ms stagger per segment." },
+      { "name": "pen-draw", "value": "600ms ease-pen", "purpose": "Score circle, ticks, crosses, nav underline." },
+      { "name": "ink-in", "value": "550ms ease-ink, from opacity 0, blur 3px, 4px down", "purpose": "Content and parts appearing; 70ms stagger per part." },
+      { "name": "note-in", "value": "600ms ease-ink, from opacity 0, blur 4px, 10px left", "purpose": "Margin notes; 140ms stagger." },
+      { "name": "scribble", "value": "1.1s linear infinite", "purpose": "Loading scribble while marking." },
+      { "name": "state", "value": "200-300ms", "purpose": "Hover, colour and border transitions; 500ms for word-track width." },
+      { "name": "reduced-motion", "value": "all animations off; pen strokes rendered fully drawn", "purpose": "prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Mark Button",
+      "kind": "button",
+      "refersTo": "button-mark",
+      "description": "The single primary action: mark the whole paragraph.",
+      "html": "<button class=\"ds-btn-mark\">Mark my paragraph</button>",
+      "css": ".ds-btn-mark { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 24px; border: 0; border-radius: 2px; background: var(--ink, #1c2533); color: var(--paper, #fdfdfe); font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); font-weight: 600; font-size: 16px; cursor: pointer; box-shadow: 0 4px 14px -6px rgba(28,37,51,0.45); transition: transform 200ms, box-shadow 200ms, background-color 200ms; } .ds-btn-mark:hover { transform: translateY(-1px); background: var(--pen, #c0392b); box-shadow: 0 10px 22px -10px rgba(192,57,43,0.6); } .ds-btn-mark:active { transform: none; } .ds-btn-mark:focus-visible { outline: 2px solid var(--pen, #c0392b); outline-offset: 2px; } .ds-btn-mark:disabled { opacity: 0.45; box-shadow: none; cursor: not-allowed; transform: none; }"
+    },
+    {
+      "name": "Check Button",
+      "kind": "button",
+      "refersTo": "button-check",
+      "description": "Outlined secondary action to check one part.",
+      "html": "<button class=\"ds-btn-check\">Check my summary</button>",
+      "css": ".ds-btn-check { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1px solid var(--ink, #1c2533); border-radius: 2px; background: transparent; color: var(--ink, #1c2533); font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); font-weight: 600; font-size: 14px; cursor: pointer; transition: background-color 150ms, color 150ms; } .ds-btn-check:hover { background: var(--ink, #1c2533); color: var(--paper, #fdfdfe); } .ds-btn-check:focus-visible { outline: 2px solid var(--pen, #c0392b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Mode Switch",
+      "kind": "custom",
+      "refersTo": "mode-switch-active",
+      "description": "Two-segment writing-mode switch on the sheet header.",
+      "html": "<div class=\"ds-switch\" role=\"tablist\"><span class=\"ds-switch-thumb\"></span><button class=\"ds-switch-tab ds-on\" role=\"tab\" aria-selected=\"true\">Part by part</button><button class=\"ds-switch-tab\" role=\"tab\" aria-selected=\"false\">Whole paragraph</button></div>",
+      "css": ".ds-switch { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; padding: 4px; border: 1px solid var(--rule, rgba(28,37,51,0.14)); border-radius: 2px; background: var(--paper, #fdfdfe); font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); font-size: 14px; font-weight: 600; } .ds-switch-thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 2px; background: var(--ink, #1c2533); transition: transform 300ms cubic-bezier(0.16,1,0.3,1); } .ds-switch-tab { position: relative; z-index: 1; padding: 6px 16px; border: 0; background: none; color: var(--ink-soft, #4a5568); cursor: pointer; transition: color 300ms; } .ds-switch-tab:hover { color: var(--ink, #1c2533); } .ds-switch-tab.ds-on { color: var(--paper, #fdfdfe); } .ds-switch-tab:focus-visible { outline: 2px solid var(--pen, #c0392b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Writing Area",
+      "kind": "input",
+      "refersTo": "writing-area",
+      "description": "Squared-paper textarea; focus takes the part's ink and highlighter.",
+      "html": "<div style=\"--hl: rgba(120,210,110,0.45); --part-ink: #1e6b2e;\"><textarea class=\"ds-writing\" rows=\"3\" placeholder=\"In her statement, the principal argues that...\"></textarea></div>",
+      "css": ".ds-writing { display: block; width: 100%; resize: none; padding: 0 12px; border: 1px solid var(--rule, rgba(28,37,51,0.14)); border-radius: 2px; font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); font-size: 17px; line-height: 28px; color: var(--ink, #1c2533); caret-color: var(--pen, #c0392b); background-color: var(--paper, #fdfdfe); background-image: linear-gradient(rgba(31,78,121,0.085) 1px, transparent 1px), linear-gradient(90deg, rgba(31,78,121,0.085) 1px, transparent 1px); background-size: 28px 28px; background-position: -1px -1px; transition: border-color 200ms, box-shadow 200ms; } .ds-writing::placeholder { color: var(--ink-faint, #6b7686); } .ds-writing:focus { outline: none; border-color: var(--part-ink, #1c2533); box-shadow: 0 0 0 3px var(--hl, rgba(28,37,51,0.14)); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Wordmark plus text links; active link carries a red pen underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\">Response Paragraph <span>Week 4 · UTP</span></a><div class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-link ds-active\" aria-current=\"page\">Write<svg viewBox=\"0 0 100 8\" preserveAspectRatio=\"none\"><path d=\"M2 5 C 25 2, 55 7, 98 3\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"/></svg></a><a href=\"#\" class=\"ds-nav-link\">Examples</a><a href=\"#\" class=\"ds-nav-link\">Expressions</a><a href=\"#\" class=\"ds-nav-link\">Rubric</a></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); } .ds-nav-brand { color: var(--ink, #1c2533); text-decoration: none; font-family: var(--font-display, 'Bricolage Grotesque', sans-serif); font-weight: 700; font-size: 20px; letter-spacing: -0.025em; } .ds-nav-brand span { font-family: var(--font-body, 'Atkinson Hyperlegible Next', sans-serif); font-weight: 400; font-size: 14px; letter-spacing: 0; color: var(--ink-faint, #6b7686); margin-left: 6px; } .ds-nav-links { display: flex; gap: 4px; } .ds-nav-link { position: relative; padding: 6px 12px; border-radius: 4px; font-size: 14px; color: var(--ink-soft, #4a5568); text-decoration: none; transition: color 150ms; } .ds-nav-link:hover { color: var(--ink, #1c2533); } .ds-nav-link:focus-visible { outline: 2px solid var(--pen, #c0392b); outline-offset: 2px; } .ds-nav-link.ds-active { color: var(--ink, #1c2533); font-weight: 600; } .ds-nav-link svg { position: absolute; left: 8px; right: 8px; bottom: -2px; width: calc(100% - 16px); height: 8px; color: var(--pen, #c0392b); }"
+    },
+    {
+      "name": "Sheet with Margin Rule",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "Squared paper sheet on the desk with a red margin rule.",
+      "html": "<section class=\"ds-sheet\"><div class=\"ds-sheet-margin\">202 words</div><div class=\"ds-sheet-body\"><h2>Draft 2, marked</h2><p>Banning mobile phones for the whole school day may protect students' concentration.</p></div></section>",
+      "css": ".ds-sheet { position: relative; display: grid; grid-template-columns: 212px 1fr; border-radius: 4px; background-color: var(--paper, #fdfdfe); background-image: linear-gradient(rgba(31,78,121,0.085) 1px, transparent 1px), linear-gradient(90deg, rgba(31,78,121,0.085) 1px, transparent 1px); background-size: 28px 28px; background-position: -1px -1px; box-shadow: 0 1px 2px rgba(28,37,51,0.06), 0 12px 32px -12px rgba(28,37,51,0.18); color: var(--ink, #1c2533); font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); } .ds-sheet::before { content: ''; position: absolute; top: 0; bottom: 0; left: 212px; width: 1px; background: rgba(214,69,65,0.55); } .ds-sheet-margin { padding: 28px 20px; font-family: var(--font-mono, 'Atkinson Hyperlegible Mono', monospace); font-variant-numeric: tabular-nums; } .ds-sheet-body { padding: 28px 40px 28px 24px; } .ds-sheet-body h2 { margin: 0; font-family: var(--font-display, 'Bricolage Grotesque', sans-serif); font-size: 30px; font-weight: 700; letter-spacing: -0.025em; } .ds-sheet-body p { font-size: 17px; line-height: 28px; }"
+    },
+    {
+      "name": "Highlighted Part",
+      "kind": "chip",
+      "description": "Highlighter swipe behind text of one paragraph part.",
+      "html": "<p class=\"ds-onGrid\"><span class=\"ds-hl\" style=\"--hl: rgba(110,175,240,0.45)\">Banning mobile phones is too extreme.</span> <span class=\"ds-hl\" style=\"--hl: rgba(120,210,110,0.45)\">In her statement, the principal argues...</span></p>",
+      "css": ".ds-onGrid { font-family: var(--font-body, 'Atkinson Hyperlegible Next', system-ui, sans-serif); font-size: 17px; line-height: 28px; color: var(--ink, #1c2533); } .ds-hl { background-image: linear-gradient(100deg, transparent 0, var(--hl) 0.15em, var(--hl) calc(100% - 0.1em), transparent 100%); background-repeat: no-repeat; background-size: 100% 78%; background-position: 0 60%; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0.2em 0.35em 0.25em 0.3em; padding: 0 0.08em; animation: ds-swipe 750ms cubic-bezier(0.16,1,0.3,1) both; } @keyframes ds-swipe { from { background-size: 0% 78%; } to { background-size: 100% 78%; } }"
+    },
+    {
+      "name": "Circled Score",
+      "kind": "custom",
+      "refersTo": "priority-number",
+      "description": "Score in mono, circled in red pen that draws on.",
+      "html": "<span class=\"ds-score\"><svg viewBox=\"0 0 100 64\" preserveAspectRatio=\"none\"><path d=\"M68 7 C 42 1, 7 9, 6 33 C 5 54, 40 61, 63 57 C 88 53, 97 39, 94 24 C 91 10, 70 4, 46 6\" pathLength=\"1\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"/></svg><span class=\"ds-score-num\">19<small>/20</small></span></span>",
+      "css": ".ds-score { position: relative; display: inline-grid; place-items: center; margin: 24px 40px; color: var(--pen, #c0392b); } .ds-score svg { position: absolute; left: -22%; top: -30%; width: 144%; height: 160%; pointer-events: none; } .ds-score path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ds-pen 600ms cubic-bezier(0.65,0,0.35,1) forwards; } .ds-score-num { position: relative; padding: 0 4px; font-family: var(--font-mono, 'Atkinson Hyperlegible Mono', monospace); font-variant-numeric: tabular-nums; font-size: 48px; font-weight: 600; line-height: 1; } .ds-score-num small { font-size: 18px; font-weight: 400; } @keyframes ds-pen { to { stroke-dashoffset: 0; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Marked Notebook Sheet",
+    "overview": "Everything happens on a sheet of squared paper lying on a pale blue-grey desk. The student writes in ballpoint navy, each of the four paragraph parts is swiped with its own highlighter, and the marking comes back in red pen: a hand-drawn circle around the score, ticks and crosses in the rubric, bracketed notes in the margin. There is no editor chrome and no AI sidebar; the sheet is the interface, and the red margin rule divides the margin (word track, Mark button, score, per-part key) from the writing.\n\nDensity is classroom-practical: generous 28px line spacing that sits text on the grid, compact 12-14px helper text, figures always in tabular mono so counts and scores read like a tally. Light mode is daylight on white paper; dark mode is the same sheet under a desk lamp, with the pen warming to coral and highlighters dimmed to keep contrast. The world uses no texture, no handwriting fonts and no page curl; its only hand-made gestures are the SVG pen strokes and the highlighter swipe.",
+    "keyCharacteristics": [
+      "Squared paper sheets (28px grid) with a red vertical margin rule, floating on a flat desk colour.",
+      "Navy ink for all text and primary actions; red pen reserved for marking, scores, errors and focus.",
+      "Four part highlighters, each paired with a darker part ink for text that names the part.",
+      "Tabular mono figures for every count, score and number.",
+      "Motion that imitates marking: swipes, pen strokes drawn on, notes inked in, staggered."
+    ],
+    "rules": [
+      { "name": "The Red Pen Rule", "body": "Red means the teacher touched it: scores, corrections, errors, warnings, focus. Never use pen red for decoration, branding or a neutral call to action at rest.", "section": "colors" },
+      { "name": "The Highlighter Code Rule", "body": "The four highlighters belong to the four parts (topic, summary, reaction, conclusion) and are set by `data-part`. A part keeps the same colour on every surface, and a highlighter never appears on text that does not belong to, or name, its part.", "section": "colors" },
+      { "name": "The Part Ink Rule", "body": "Text that names a part is coloured with that part's ink, never with the translucent highlighter, which is only ever a background.", "section": "colors" },
+      { "name": "The Tally Rule", "body": "Every count, score, limit and draft number is set in Atkinson Hyperlegible Mono with tabular figures (`.nums`). Prose numbers stay in the body face only when they are part of a sentence.", "section": "typography" },
+      { "name": "The On-Grid Rule", "body": "Writing and read-back text uses a line-height equal to the grid (28px) so lines sit on the squares.", "section": "typography" },
+      { "name": "The One Sheet Shadow Rule", "body": "Paper is the only surface with elevation. Cards, panels and boxes inside a sheet stay flat and use rule-colour hairlines.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do put every content area on a sheet (paper, 28px grid, 4px corners, the sheet shadow) over the desk colour.",
+      "Do keep the margin rule at 212px with content at 236px on any sheet with a margin column, and move it to 16px below 1024px.",
+      "Do colour a part by setting `data-part` and letting it supply both the highlighter and the part ink.",
+      "Do set every number in the mono face with tabular figures.",
+      "Do draw marking (score circles, ticks, crosses, underlines) as SVG pen strokes in pen red, drawn on with `pen-draw` and staggered.",
+      "Do use expo-out (`cubic-bezier(0.16, 1, 0.3, 1)`) for entrances and swipes, and turn all of it off under reduced motion, leaving pen strokes fully drawn.",
+      "Do show corrections as a 2px red strike-through on the wrong text followed by the fix in semibold red."
+    ],
+    "donts": [
+      "Don't use pen red at rest for anything that is not marking, an error, focus, or a hover response.",
+      "Don't put a highlighter colour on text that is not part of, or the name of, its paragraph part.",
+      "Don't add paper texture, handwriting or script fonts, or page-curl effects; the pen exists only in SVG strokes.",
+      "Don't nest shadowed cards inside a sheet; separate with rule-colour hairlines.",
+      "Don't round controls beyond 2px or use pill buttons.",
+      "Don't set small uppercase tracked labels above a heading or section as an eyebrow; the label role is for keying individual items only."
+    ]
+  }
+}

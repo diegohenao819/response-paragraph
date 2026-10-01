@@ -2,18 +2,10 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 text-gray-700 py-4 mt-8 border-t">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
-        <div className="text-center md:text-left">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} Diego Henao. All rights reserved.
-          </p>
-          <p className="text-sm">
-            Professor of Upper-Intermediate English Course at Universidad
-            Tecnológica de Pereira.
-          </p>
-        </div>
-        <div className="flex gap-4 mt-2 md:mt-0"></div>
+    <footer className="mx-auto w-full max-w-6xl px-4 pb-8 text-sm text-[var(--ink-faint)] sm:px-6">
+      <div className="flex flex-col gap-1 border-t border-[var(--rule)] pt-5 md:flex-row md:justify-between">
+        <p>&copy; {new Date().getFullYear()} Diego Henao. All rights reserved.</p>
+        <p>Professor of Upper-Intermediate English Course at Universidad Tecnológica de Pereira.</p>
       </div>
     </footer>
   );

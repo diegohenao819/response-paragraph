@@ -1,169 +1,159 @@
 // src/app/examples/page.tsx
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { SECTIONS, countWords, joinParagraph } from "@/lib/responseParagraph";
+import { segmentParagraph } from "@/lib/marking";
+import Highlighted from "@/components/desk/Highlighted";
+import MarginNote from "@/components/desk/MarginNote";
+
+const modelParts = Object.fromEntries(SECTIONS.map((s) => [s.id, s.example]));
+const modelParagraph = joinParagraph(modelParts);
+
+const positions = [
+  {
+    case: "Phones banned at school",
+    items: [
+      {
+        stance: "Agree",
+        text: "It is clear that phones distract students, so keeping them in lockers during the school day is a reasonable decision.",
+      },
+      {
+        stance: "Partially agree",
+        text: "Although banning phones may seem reasonable, a total ban is too extreme to be the best solution.",
+      },
+      {
+        stance: "Disagree",
+        text: "The main point of the principal's statement is that phones damage learning, but the real problem is how students use them.",
+      },
+    ],
+  },
+  {
+    case: "No AI in written assignments",
+    items: [
+      {
+        stance: "Agree",
+        text: "Banning AI tools in written assignments is a necessary decision, because students only learn to think when they write by themselves.",
+      },
+      {
+        stance: "Partially agree",
+        text: "Although banning AI tools may protect honest work, a total ban ignores the fact that students must learn to use AI responsibly.",
+      },
+      {
+        stance: "Disagree",
+        text: "Banning AI tools will not make students more honest; it will only push them to use these tools in secret.",
+      },
+    ],
+  },
+];
+
+const mistakes = [
+  {
+    part: "topic",
+    label: "Topic sentence",
+    wrong: "In this paragraph, I am going to talk about the phone ban.",
+    why: "It announces the topic, but it says nothing about it. Add your position.",
+  },
+  {
+    part: "topic",
+    label: "Topic sentence",
+    wrong: "Nowadays, technology is very important in our lives.",
+    why: "Too general: which case? What do you think?",
+  },
+  {
+    part: "summary",
+    label: "Summary",
+    wrong: "In her statement, the principal wrongly argues that phones are the main source of distraction…",
+    why: "A judge, not a camera: “wrongly”, “unfortunately”, “I think” are opinions. Save them for the reaction.",
+  },
+  {
+    part: "conclusion",
+    label: "Conclusion",
+    wrong: "In conclusion, phones also damage students' eyes and sleep, so parents should control screen time at home.",
+    why: "New arguments (eyes, sleep, parents). A conclusion closes; it does not open.",
+  },
+];
 
 export default function ExamplesPage() {
-  const example1 = {
-    title: "EXAMPLE 1: El Olvido que Serémos",
-    sections: [
-      {
-        number: 1,
-        title: "Topic Sentence",
-        text: "In the movie El Olvido que Seremos, directed by Fernando Trueba, the story follows the life of Héctor Abad Gómez, a Colombian doctor and human rights activist who fought for social justice and public health.",
-      },
-      {
-        number: 2,
-        title: "Brief Summary",
-        text: "The film portrays his dedication to helping the underprivileged in Medellín and the profound impact of his work on his family, especially his son.",
-      },
-      {
-        number: 3,
-        title: "Analysis or Reaction",
-        text: "This story is powerful because it shows the courage and resilience needed to stand up for what is right, even in the face of danger. It highlights the importance of empathy and fighting for the common good, which can be both inspiring and tragic.",
-      },
-      {
-        number: 4,
-        title: "Supporting Evidence",
-        text: "For instance, the scene where Héctor passionately speaks at a public gathering about the right to health care demonstrates his firm commitment to his beliefs.",
-      },
-      {
-        number: 5,
-        title: "Personal Connection or Intertextual Text",
-        text: "This is very important in current society because the film sheds light on the ongoing social issues in Colombia, such as political violence and the struggle for human rights, a factor that can create change and inspire future generations to keep pushing for justice.",
-      },
-      {
-        number: 6,
-        title: "Concluding Sentence",
-        text: "The movie serves as a reminder that acts of kindness and advocacy can leave a lasting impact, even if they come at great personal cost.",
-      },
-    ],
-  };
-
-  const example2 = {
-    title: "EXAMPLE 2: The Great Dictator",
-    sections: [
-      {
-        number: 1,
-        title: "Topic Sentence",
-        text: "In The Great Dictator, Charlie Chaplin uses satire to deliver a powerful message on the dangers of authoritarianism.",
-      },
-      {
-        number: 2,
-        title: "Brief Summary",
-        text: "The film juxtaposes humor with the harsh realities of dictatorship, critiquing the rise of totalitarianism.",
-      },
-      {
-        number: 3,
-        title: "Analysis or Reaction",
-        text: "The film's blend of comedy and tragedy serves as both a biting critique and a heartfelt plea for humanity and freedom.",
-      },
-      {
-        number: 4,
-        title: "Supporting Evidence",
-        text: "For example, Chaplin's iconic speech near the end of the film directly addresses the audience, urging them to fight for democracy.",
-      },
-      {
-        number: 5,
-        title: "Personal Connection or Intertextual Text",
-        text: "This resonant narrative mirrors current events where populist movements threaten democratic values, making the film's message as relevant today as it was then.",
-      },
-      {
-        number: 6,
-        title: "Concluding Sentence",
-        text: "Ultimately, The Great Dictator remains a timeless reminder of the power of art to challenge oppression and inspire change.",
-      },
-    ],
-  };
-
-  const example3 = {
-    title: "EXAMPLE 3: To Kill a Mockingbird - Courtroom Scene",
-    sections: [
-      {
-        number: 1,
-        title: "Topic Sentence",
-        text: "In Harper Lee's To Kill a Mockingbird, the courtroom scene powerfully exposes the deep-seated racial injustice in the American South.",
-      },
-      {
-        number: 2,
-        title: "Brief Summary",
-        text: "In this scene, the trial of Tom Robinson unfolds as the courtroom becomes a microcosm of the broader societal prejudices that pervade the community.",
-      },
-      {
-        number: 3,
-        title: "Analysis or Reaction",
-        text: "I was struck by how the narrative not only depicted a legal battle but also mirrored the moral conflicts of the era, inviting readers to question the fairness of the justice system.",
-      },
-      {
-        number: 4,
-        title: "Supporting Evidence",
-        text: "For instance, Atticus Finch’s calm yet impassioned defense, where he emphasizes the importance of truth over tradition, highlights the stark contrast between idealism and societal bias.",
-      },
-      {
-        number: 5,
-        title: "Personal Connection or Intertextual Text",
-        text: "Reflecting on modern issues of racial inequality, I find that this scene resonates with current events, much like how contemporary writers draw parallels between historical injustices and today’s challenges.",
-      },
-      {
-        number: 6,
-        title: "Concluding Sentence",
-        text: "Ultimately, the courtroom scene not only advances the novel’s central themes but also serves as a timeless call to recognize and confront the injustices that continue to shape our world.",
-      },
-    ],
-  };
-
-  const renderExampleSections = (
-    sections: { number: number; title: string; text: string }[]
-  ) => (
-    <div className="space-y-4">
-      {sections.map((section) => (
-        <div key={section.number} className="border-b pb-2">
-          <p className="font-bold text-gray-800">
-            {section.number}. {section.title}:
-          </p>
-          <p className="ml-4 text-gray-700">{section.text}</p>
-        </div>
-      ))}
-    </div>
-  );
-
   return (
-    <div className="container mx-auto p-6 space-y-8">
-      <h1 className="text-4xl font-bold text-center mb-6">
-        Response Paragraph Examples
-      </h1>
+    <div className="space-y-10">
+      <header className="max-w-3xl pt-2">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Examples</h1>
+        <p className="mt-3 text-[17px] text-[var(--ink-soft)]">
+          The model paragraph from class, strong topic sentences and the mistakes to avoid.
+        </p>
+      </header>
 
-      <Card className="shadow-lg">
-        <CardHeader className="bg-blue-100 p-4">
-          <CardTitle className="text-xl">{example1.title}</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4">
-          {renderExampleSections(example1.sections)}
-        </CardContent>
-      </Card>
+      <section aria-labelledby="model-heading" className="sheet sheet-margin px-7 py-8 [--margin-x:16px] lg:[--margin-x:212px] lg:pl-[236px] lg:pr-10">
+        <h2 id="model-heading" className="text-2xl font-bold tracking-tight sm:text-3xl">
+          Model paragraph: phones banned at school
+        </h2>
+        <blockquote className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--ink-soft)]">
+          The principal: “Phones are the main source of distraction in our classrooms. Since students started
+          using them in class, their concentration and grades have dropped, and cyberbullying has increased. From
+          now on, phones must stay in lockers from 7 a.m. to 1 p.m. This is not a punishment; it is a way to protect
+          learning.”
+        </blockquote>
+        <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_280px]">
+          <div>
+            <Highlighted segments={segmentParagraph(modelParagraph, modelParts)} baseDelay={200} />
+            <p className="nums mt-3 text-sm text-[var(--ink-faint)]">
+              {countWords(modelParagraph)} words · 1 + 3 + 5 + 1 sentences · one paragraph
+            </p>
+          </div>
+          <ol className="space-y-4">
+            {SECTIONS.map((s, i) => (
+              <li key={s.id} data-part={s.id}>
+                <MarginNote delayMs={500 + i * 120}>
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--part-ink)]">
+                    <span className="hl px-1">{s.label}</span>
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed">{s.hint}</p>
+                </MarginNote>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-      <Card className="shadow-lg">
-        <CardHeader className="bg-green-100 p-4">
-          <CardTitle className="text-xl">{example2.title}</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4">
-          {renderExampleSections(example2.sections)}
-        </CardContent>
-      </Card>
+      <section aria-labelledby="positions-heading" className="sheet px-7 py-8 lg:px-10">
+        <h2 id="positions-heading" className="text-2xl font-bold tracking-tight">One topic, three strong positions</h2>
+        <p className="mt-1 text-[var(--ink-soft)]">Agree, disagree or partially agree: just be clear. Topic + position.</p>
+        <div className="mt-6 grid gap-8 md:grid-cols-2">
+          {positions.map((group) => (
+            <div key={group.case}>
+              <h3 className="text-lg font-bold">{group.case}</h3>
+              <ul className="mt-3 divide-y divide-[var(--rule)]" data-part="topic">
+                {group.items.map((item) => (
+                  <li key={item.stance} className="py-3">
+                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--ink-faint)]">{item.stance}</p>
+                    <p className="mt-1 leading-relaxed">{item.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <Card className="shadow-lg">
-        <CardHeader className="bg-purple-100 p-4">
-          <CardTitle className="text-xl">{example3.title}</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4">
-          {renderExampleSections(example3.sections)}
-        </CardContent>
-      </Card>
+      <section aria-labelledby="mistakes-heading" className="sheet px-7 py-8 lg:px-10">
+        <h2 id="mistakes-heading" className="text-2xl font-bold tracking-tight">Common mistakes</h2>
+        <ul className="mt-5 grid gap-x-10 gap-y-6 md:grid-cols-2">
+          {mistakes.map((m) => (
+            <li key={m.wrong} data-part={m.part}>
+              <p className="text-xs font-bold uppercase tracking-wide text-[var(--part-ink)]">{m.label}</p>
+              <p className="mt-1 leading-relaxed text-[var(--ink-soft)] line-through decoration-[var(--pen)] decoration-2">
+                {m.wrong}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-[var(--pen)]">{m.why}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-      <div className="text-center">
-        <Link href="/" className="text-blue-600 hover:underline text-lg">
-          &larr; Back to Home
-        </Link>
-      </div>
+      <Link href="/" className="inline-block font-semibold underline decoration-[var(--pen)] decoration-2 underline-offset-4">
+        <ArrowLeft aria-hidden className="mr-1 inline h-4 w-4 align-[-3px]" />
+        Back to writing
+      </Link>
     </div>
   );
 }
