@@ -18,9 +18,7 @@ export default function Navbar() {
       <Link href="/" className="group flex items-baseline gap-2 text-[var(--ink)]">
         <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight sm:text-xl">
           Response Paragraph
-        </span>
-        <span className="hidden text-sm text-[var(--ink-faint)] sm:inline">Week 4 · UTP</span>
-      </Link>
+        </span>      </Link>
       <div className="contents sm:flex sm:items-center sm:gap-1">
         <div className="-mx-2.5 order-last flex w-full items-center sm:order-none sm:mx-0 sm:w-auto">
           {links.map((l) => {
